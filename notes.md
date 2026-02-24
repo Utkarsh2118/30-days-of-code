@@ -1,61 +1,33 @@
-🔹 Definition
+🌳 Sum of Root-to-Leaf Binary Numbers — Java Notes
+🧾 Problem Summary
 
-A special binary string is a binary string that satisfies:
+You are given the root of a binary tree where each node contains either 0 or 1.
+Each root-to-leaf path represents a binary number (root is the most significant bit).
 
-The number of 1s is equal to the number of 0s.
+Your task is to find the sum of all numbers formed by these paths.
 
-For every prefix of the string, the number of 1s is greater than or equal to the number of 0s.
+💡 Core Concept
 
-This is similar to a balanced parentheses sequence, where:
+Instead of storing the full path and converting later, build the number as you traverse:
 
-1 represents an opening bracket.
+current = current * 2 + node.val
 
-0 represents a closing bracket.
+Why?
 
-🔹 Problem Objective
+Multiplying by 2 shifts bits left in binary.
 
-Given a special binary string s, we can perform moves where we swap two consecutive non-empty special substrings.
+Adding node.val appends the current bit.
 
-The goal is to obtain the lexicographically largest string possible after any number of such swaps.
+🛠 Approach (DFS — Depth First Search)
 
-🔹 Key Observations
+Start traversal from the root with current = 0.
 
-A special string can be decomposed into smaller special substrings.
+Update the number at each node.
 
-Since swapping adjacent special substrings is allowed, their order can be rearranged.
+If a leaf node is reached:
 
-To maximize lexicographic order, substrings with larger values (more leading 1s) should appear earlier.
+Add the number to the total.
 
-Special substrings can be nested, so we must also optimize their internal structure.
+Recursively explore left and right.
 
-🔹 Approach (Conceptual Steps)
-
-Traverse the string and use a counter:
-
-Increment for 1.
-
-Decrement for 0.
-
-Whenever the counter becomes zero, a valid special substring is identified.
-
-Recursively process the inner part of each substring to make it lexicographically largest.
-
-Wrap the processed inner string with outer 1 and 0.
-
-Collect all such substrings and sort them in descending lexicographic order.
-
-Concatenate the sorted substrings to form the final result.
-
-🔹 Why Sorting Works
-
-Because allowed swaps effectively let us reorder adjacent special substrings, arranging them in descending order ensures the overall string is maximized lexicographically.
-
-🔹 Complexity
-
-Time Complexity: O(n²) due to recursion and sorting.
-
-Space Complexity: O(n) for recursion and substring storage.
-
-🔹 Intuition Summary
-
-Break the string into balanced blocks, optimize each block recursively, then arrange blocks from largest to smallest to push more 1s toward the front.
+Return the total sum.
