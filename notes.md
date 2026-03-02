@@ -1,33 +1,43 @@
-🌳 Sum of Root-to-Leaf Binary Numbers — Java Notes
-🧾 Problem Summary
+💡 Core Idea (Understand This Properly)
 
-You are given the root of a binary tree where each node contains either 0 or 1.
-Each root-to-leaf path represents a binary number (root is the most significant bit).
+For an n x n grid:
 
-Your task is to find the sum of all numbers formed by these paths.
-
-💡 Core Concept
-
-Instead of storing the full path and converting later, build the number as you traverse:
-
-current = current * 2 + node.val
+Row i (0-indexed) must have at least (n - i - 1) trailing zeros.
 
 Why?
 
-Multiplying by 2 shifts bits left in binary.
+Because all cells above the main diagonal must be 0.
 
-Adding node.val appends the current bit.
+So:
 
-🛠 Approach (DFS — Depth First Search)
+Row Index (i)	Required trailing zeros
+0	n - 1
+1	n - 2
+2	n - 3
+...	...
+n - 1	0
+🔥 Strategy
 
-Start traversal from the root with current = 0.
+Count trailing zeros for every row.
 
-Update the number at each node.
+For each row i, find a row below it that satisfies the required zeros.
 
-If a leaf node is reached:
+Bring it upward using adjacent swaps.
 
-Add the number to the total.
+Count swaps.
 
-Recursively explore left and right.
+If no such row exists → return -1.
 
-Return the total sum.
+This is basically like bubble sort movement.
+
+🧠 Why Greedy Works?
+
+Because:
+
+We fix rows from top to bottom.
+
+Once fixed, we never touch them again.
+
+We always bring the nearest valid row upward → minimum swaps.
+
+Simple and powerful.
